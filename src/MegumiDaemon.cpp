@@ -20,13 +20,28 @@ namespace mahoraga
 
     void MegumiDaemon::start()
     {
+        if (active) 
+        {
+            return;
+        }
+        
         active = true;
-        processStream();
+        workerThread = std::thread(&MegumiDaemon::processStream, this);
     }
 
     void MegumiDaemon::stop()
     {
+        if (!active)
+        {
+            return;
+        }
+
         active = false;
+        
+        if (workerThread.joinable())
+        {
+            workerThread.join();
+        }
     }
 
     void MegumiDaemon::processStream()

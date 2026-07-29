@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <thread>
 #include "DefenceOrchestrator.hpp"
 
 namespace mahoraga
@@ -19,6 +20,7 @@ namespace mahoraga
         std::string binaryPath;
         bool active;
         std::unique_ptr<DefenceOrchestrator> orchestrator;
+        std::thread workerThread;
         void processStream();
     };
 }
